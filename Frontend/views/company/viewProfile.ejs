@@ -1,0 +1,220 @@
+<% layout("../layouts/boilerplate.ejs") %>
+
+<style>
+    body{
+        background-color: black;
+    }
+    .card{
+        background-color: #353132;
+    }
+    .card-links-ul li{
+        background-color: #353132 !important;
+    }
+    .card-links-ul i,p{
+        color: white !important;
+    }
+    .profile-extraz{
+      position: absolute;
+      top: 20rem; 
+    }
+    .wrapper-date{
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+      font-weight: 250;
+    }
+    .fa-check{
+      color: rgb(6, 196, 6);
+    }
+    .fa-xmark{
+      color: red;
+    }    
+</style>
+
+<section style="background-color: black;">
+  <div class="container py-5">
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="card mb-4" style="padding: 1.35rem;">
+          <div class="card-body text-center">  
+            <i class="fa-solid fa-circle-user fa-6x" style="color: white; opacity: 0.25;"></i>
+            <h5 class="my-3"> <%= user.name %> </h5>
+            <p class="text-muted mb-1">
+              <% if(user.branch && user.branch != null && user.branch != ''){ %>
+                <%= user.branch %>
+              <% } %>
+            </p>
+            
+            <p class="text-muted mb-1">
+              <% if(user.branch && user.branch != null && user.branch != ''){ %>
+                <%= user.passoutYear %> 
+              <% } %>
+            </p>
+
+            <!-- <div class="d-flex justify-content-center mb-2">
+              <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary">Follow</button>
+              <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-primary ms-1">Message</button>
+            </div> -->
+          </div>
+        </div>
+              
+        <div class="card card-links mb-4 mb-lg-0">
+          <div class="card-body card-links-body p-0">
+            <ul class="list-group list-group-flush rounded-3 card-links-ul">
+
+              <% if(user.showContactDetails == 1 && user.alternateEmail && user.alternateEmail != null && user.alternateEmail != ''){ %>
+                <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                  <i class="fa-solid fa-envelope"></i>
+                  <p class="mb-0"> <%= user.alternateEmail %> </p>
+                </li>
+              <% } else { %>
+              <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                <i class="fa-solid fa-envelope"></i>
+                <p class="mb-0"> </p>
+              </li>      
+              <% } %>
+
+              <% if(user.showContactDetails == 1 && user.linkedinProfile && user.linkedinProfile != null && user.linkedinProfile != ''){ %>
+                <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                  <i class="fa-brands fa-linkedin"></i>
+                  <p class="mb-0"> <a id = "link" href= "<%= user.linkedinProfile %>" style="text-decoration: none; color: white;" target="_blank"> LinkedIn Profile </a> </p>
+                </li>
+                <% } else { %>
+                <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                  <i class="fa-brands fa-linkedin"></i>
+                  <p class="mb-0"> </p>
+                </li>
+                <% } %>              
+
+              <% if(user.showContactDetails == 1 && user.codingProfile && user.codingProfile != null && user.codingProfile != ''){ %>
+              <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                <i class="fa-solid fa-code"></i>
+                <p class="mb-0"> <a id = "codingLink" href="#" style="text-decoration: none; color: white;" target="_blank"> Coding Profile </a> </p>
+              </li>
+              <% } else { %>
+              <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                <i class="fa-solid fa-code"></i>
+                <p class="mb-0"> </p>
+              </li>
+              <% } %>
+              
+
+              <% if(user.showContactDetails == 1 && user.githubProfile && user.githubProfile != null && user.githubProfile != ''){ %>
+              <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                <i class="fab fa-github fa-lg text-body"></i>
+                <p class="mb-0"> <a href="#" id = "githubLink" style="text-decoration: none; color: white;" target="_blank"> Github Profile </a> </p>
+              </li>
+              <% } else { %>
+              <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                <i class="fab fa-github fa-lg text-body"></i>
+                <p class="mb-0"> </p>
+              </li>      
+              <% } %>        
+
+              <!-- 
+              <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                <i class="fab fa-facebook-f fa-lg" style="color: #3b5998;"></i>
+                <p class="mb-0">mdbootstrap</p>
+              </li> -->
+
+            </ul>
+          </div>
+        </div>
+        
+      </div>
+
+      <div class="col">
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Full Name</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0"> <%=user.name%> </p>
+              </div>
+            </div> 
+            <hr> 
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Email</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0"> <%=user.email%> </p>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Mobile</p>
+              </div>
+              <div class="col-sm-9">
+                <% if(user.showContactDetails == 1) { %>
+                  <p class="text-muted mb-0"> <%=user.phoneNumber%> </p>
+                <% } %>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Likes</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0"> <%= likeCount %> </p>
+              </div>
+            </div> 
+            <hr>
+            
+            <div class="row">
+              <div class="col-sm-3">
+                <p class="mb-0">Posts</p>
+              </div>
+              <div class="col-sm-9">
+                <p class="text-muted mb-0"> <%= postCount %> </p>
+              </div>
+            </div> 
+                        
+          </div>
+        </div>
+
+        <h5> Most Liked Post : </h5>
+        <% if (blogLiked){%>
+        <div class="card mb-4">    <!-- use w-75 or style="width: 75rem; height: 20rem" for styling -->
+          <div class="card-body">
+            <h5 class="card-title"> <%= blogLiked.company.name %> <%= blogLiked.role %> </h5>
+  
+            <span class="wrapper-date"> <%= blogLiked.date %> </span>
+            <% if(blogLiked.selectionStatus){ %>
+              <i> Selection Status <i class="fa-solid fa-check"></i> </i>
+            <% } else { %>
+              <i> Selection Status <i class="fa-solid fa-xmark"></i> </i>
+            <% } %>
+
+            <br>
+            <i>Liked by <b><%= blogLiked.likeCount %></b></i>
+            <p class="card-text"> <%- blogLiked.content %> </p>
+            
+          </div>
+        </div>
+        <% } %>         
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+  function normalizeUrl(url) 
+  {
+    // Check if the URL starts with "http://" or "https://"
+    if (!/^https?:\/\//i.test(url)) {
+      url = 'https://' + url; // Prepend "https://" if missing
+    }
+    return url;
+  }
+  var link = document.getElementById("link");
+  var url = "<%= user.linkedinPnorofile %>";
+  link.href = normalizeUrl(url);
+  var githubLink = "<%= user.githubProfile %>";
+  document.getElementById("githubLink").href = normalizeURL(githubLink);
+  var codingLink = "<%= user.codingProfile %>";
+  document.getElementById("codingLink").href = normalizeUrl(codingLink);
+</script>

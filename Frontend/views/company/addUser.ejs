@@ -1,0 +1,57 @@
+<% layout("../layouts/boilerplate.ejs") %>
+
+<style>
+    body{
+        position: relative;
+        background-color: #000;
+        color: white;
+        /* min-height: 100vh;
+        display: flex;
+        flex-direction: column; */
+    }
+
+    /* #footer{
+        margin-top: 10rem;
+    } */
+
+    #login-btn{
+        background-color: #353132 !important;
+        color: white;
+    }
+    #login{
+        display: flex;
+        justify-content: center;
+    }
+    input{
+        background-color: #353132 !important;
+        color: white !important;
+    }
+    .login-div{
+        height: 30rem;
+    }
+    
+</style>
+
+<div class="login-div">
+    <div class="row">
+        <div class="col-6 offset-3 mt-5">
+            <form method = "POST" action = "/user/add">
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name = "name">
+                </div>                
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Email Address</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name = "email">
+                  </div>                
+                <div class="mb-3">
+                  <label for="exampleInputPassword1" class="form-label">Password</label>
+                  <input type="password" class="form-control" id="exampleInputPassword1" name = "password">
+                </div>
+                <div id="login">
+                    <button id="login-btn" type="submit" class="btn mb-4 mt-3">Submit</button>
+                </div>
+              </form>        
+        </div>    
+    </div>    
+</div>

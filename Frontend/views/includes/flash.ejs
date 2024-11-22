@@ -1,0 +1,28 @@
+<style>
+    body{
+        color: white !important;
+    }
+    .alert{
+        background-color: #353132;
+        color: white;
+    }
+</style>
+
+<% if(good && good.length){ %>
+    <div class="col-6 offset-3 mt-5">
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <%= good %>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>               
+    </div>
+<% } %>
+
+
+<% if(bad && bad.length){ %>
+    <div class="col-6 offset-3 mt-5">
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <%= bad %>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>               
+    </div>
+<% } %>

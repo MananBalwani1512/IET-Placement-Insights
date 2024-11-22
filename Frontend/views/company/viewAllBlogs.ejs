@@ -1,0 +1,195 @@
+<% layout("../layouts/boilerplate.ejs") %>
+
+<style>
+    body{
+      background-color: #000;
+      color: white;
+    }
+    .card{
+      background-color: #222;
+      /* border-radius: 0.5rem; */
+    }
+    .wrapper-date{
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+      font-weight: 250;
+    }
+    .fa-check{
+      color: rgb(6, 196, 6);
+    }
+    .fa-xmark{
+      color: red;
+    }
+    .card-subtitle{
+      font-size: 0.9rem;
+    }
+    .del-btn{
+      position: absolute;
+      bottom: 1rem;
+      right: 2rem;
+    }
+    .edit-btn{
+      position: absolute;
+      bottom: 1rem;
+      right: 5.5rem;
+    }
+  </style>
+<div class="col-10 offset-1 mt-5">
+  <div class="mb-5">
+    <input type="text" id = "filter" class="form-control" oninput="getBlogs()" placeholder="Search for a blog">
+  </div>
+  <div id = "displayBlogs">
+
+  </div>
+
+  <div class="col-5 offset-4">
+    <button id = "previous" type="button" class="btn btn-dark mr-3" onclick = "previousPage()" disabled>Previous</button>
+    <span id = "pageNumber"></span>
+    <button id = "next" type="button" class="btn btn-dark ml-3" onclick = "nextPage()">Next</button>    
+  </div>
+
+  <br>
+
+</div>
+<script>
+  var blogs = <%- JSON.stringify(blogs) %>;
+  var blogsPerPage = 1;
+  var blogsPerPage = 1;
+  var totalPages = Math.ceil(blogs.length/blogsPerPage);
+  var currentPage = <%= currentPage %>;
+  var text = "<%= text %>";
+  document.getElementById("filter").value = text;
+  function previousPage()
+  {
+    currentPage = currentPage-1;
+    getBlogs();
+  }
+  function nextPage()
+  {
+    currentPage = currentPage+1;
+    getBlogs();
+  }
+  function getBlogs()
+  {
+    text = document.getElementById("filter").value;
+    var filteredBlogs = searchFilters(blogs,text);
+    totalPages = Math.ceil(filteredBlogs.length/blogsPerPage);
+    if(currentPage <= 0 && totalPages > 0)
+    {
+      currentPage = 1;
+    }
+    if(currentPage > totalPages)
+    {
+      currentPage = totalPages;
+    }
+    var blogShow;
+    if(filteredBlogs.length > 0)
+    {
+      blogShow = pagination(filteredBlogs,blogsPerPage,currentPage);
+      showBlog(blogShow.blogs);
+    }
+    else
+    {
+      showBlog([]);
+    }
+    
+    if(currentPage <= 1 || totalPages == 0)
+    {
+      document.getElementById("previous").disabled = true;
+    }
+    else
+    {
+      document.getElementById("previous").disabled = false;
+    }
+    if(currentPage >= totalPages || totalPages == 0)
+    {
+      document.getElementById("next").disabled = true;
+    }
+    else
+    {
+      document.getElementById("next").disabled = false;
+    }
+    var pageNumber = document.getElementById("pageNumber");
+    pageNumber.innerHTML = currentPage+" / "+totalPages;
+  }
+  function showBlog(blogs)
+  {
+    var flag = <%= flag %>;
+    var user = <%- JSON.stringify(user) %>;
+    var html = ``;
+    var displayBlogs = document.getElementById("displayBlogs");
+    displayBlogs.innerHTML = "";
+    for(var i = 0; i < blogs.length; i++)
+    {
+      var blog = blogs[i];
+      console.log(blog); 
+      html = html+`<div class="card mb-4">    <!-- use w-75 or style="width: 75rem; height: 20rem" for styling -->`;
+      html = html+`<div class="card-body">`;
+      html = html+`<h5 class="card-title">${blog.company.name} ${blog.role} </h5>`;
+      if(blog.showContactDetails == 0)
+        html = html+`<h6 class="card-subtitle mb-2"> <i class="fa-solid fa-user"></i> ${blog.user.name} </h6>`;
+      else
+      html = html+`<h6 class="card-subtitle mb-2">
+      <a style="text-decoration:none; color:white;" href = "/user/profile/`+blog.user.id+`"> 
+      <i class="fa-solid fa-user"></i> ${blog.user.name}</a> </h6>`;
+        
+      html = html+`<span class="wrapper-date"> Last Updated On : ${blog.date} </span>`;
+
+      for(tag of blog.tags){
+        html = html + `<span class="badge badge-pill badge-dark mt-2 mb-2 ml-1 mr-1" style="font-size: 1rem; opacity: 0.75">${tag}</span>`;
+      }
+
+      html = html + `<br>`;
+
+      if(blog.selectionStatus)
+      {
+        html = html+`<i> Selection Status <i class="fa-solid fa-check"></i> </i>`;
+      } 
+      else 
+      {
+        html = html+`<i> Selection Status <i class="fa-solid fa-xmark"></i> </i>`;
+      }
+
+      html = html+`<p class="card-text"> ${blog.content} </p>`;
+
+      if(flag == true && (user.email == blog.user.email))
+      {
+                html = html + `<form action = "/blog/delete" method = "POST">`;
+                html = html + `<input type = "hidden" name = "id" value = '${blog.id}'>`;
+                html = html + `<input type = "hidden" name = "currentPage" value = '${currentPage}'>`;
+                html = html + `<input type = "hidden" name = "text" value = '${text}'>`;
+                html = html + `<input type = "hidden" name = "url" value = '/blog/getAll'>`;
+                html = html + `<button type = "submit" class="btn btn-danger del-btn"> <i class="fa-solid fa-trash-can"></i> </button>`;
+                html = html + `</form>`;
+
+                html = html + `<form action = "/blog/edit/${blog.id}" method = "GET">`;
+                html = html + `<input type = "hidden" name = "id" value = '${blog.id}'>`;
+                html = html + `<button type = "submit" class="btn btn-success edit-btn"> <i class="fas fa-edit"></i> </button>`;
+                html = html + `</form>`;                
+      }    
+
+      if(flag == true) 
+      {
+                html = html + `<div class="like-status d-flex">`;
+                html = html + `<form action = "/like" method = "POST">`;
+                html = html + `<input type = "hidden" name = "blog_id" value = '${blog.id}'>`;
+                html = html + `<input type = "hidden" name = "currentPage" value = '${currentPage}'>`;
+                html = html + `<input type = "hidden" name = "text" value = '${text}'>`;
+                html = html + `<input type = "hidden" name = "url" value = "/blog/getAll">`;
+                html = html + `<button type="submit" class="btn btn-primary like-btn-status mr-3"> <i class="fa fa-thumbs-up"></i> &nbsp; ${blog.likeCount} </button>`;
+                html = html + `</form>`;
+                // html = html + `<form action = "/dislike" method = "POST">`;
+                // html = html + `<input type = "hidden" name = "blog_id" value = '${blog.id}'>`;
+                // html = html + `<input type = "hidden" name = "url" value = "/blog/getAll">`;
+                // html = html + `<button type = "submit" class = "btn btn-danger like-btn-status"> <i class="fa-solid fa-thumbs-down"></i> </button>`;
+                // html = html + `</form>`;            
+                html = html + `</div>`;
+      }  
+      html = html + `</div>`;
+      html = html + `</div>`;
+    }
+    displayBlogs.innerHTML = html;
+  }
+  getBlogs();
+</script>

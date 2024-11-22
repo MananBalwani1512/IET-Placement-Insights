@@ -1,0 +1,60 @@
+<style>
+  .iet-logo{
+    width: 2rem;
+    height: 2rem;
+    filter: grayscale(100%) !important;    
+  }
+</style>
+
+<nav class="navbar navbar-expand-lg bg-light sticky-top" id="navbar">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">
+      <img class="iet-logo me-1 mb-1" src="https://www.ietdavv.edu.in/icices2023/wp-content/uploads/2022/05/davvlogo.png">IET-PlacementInsights
+    </a>
+
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active navbar-anchor" aria-current="page" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link navbar-anchor" href="/about">About Us</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link navbar-anchor" href="/company/getAll">Companies</a>
+        </li>
+
+        <% if( flag == true && user.role == "admin") { %>
+          <li class="nav-item">
+            <a class="nav-link navbar-anchor" href="/blog/request/getAll">Blog Requests</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link navbar-anchor" href="/company/request/getAll">Company Requests</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link navbar-anchor" href="/blog/update/getAll">Update Requests</a>
+          </li>
+        <% } %>
+        
+        <li class="nav-item">
+          <a class="nav-link active navbar-anchor" aria-current="page" href="/developers">Developers</a>
+        </li>                
+      </ul>
+
+      <ul class="navbar-nav ms-auto">
+        <% if(flag == true) { %>
+          <li class="nav-item dropdown navbar-anchor">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <%= user.name %>
+            </a>
+            <ul class="dropdown-menu">
+              <!-- <li><a class="dropdown-item" href="/logout">Logout</a></li> -->
+              <li><a class="dropdown-item" href="/user/profile/<%=user.id%>"> <i class="fa-solid fa-user mr-1"></i> Your Profile</a></li> 
+              <li><a class="dropdown-item" href="/user/update"> <i class="fa-solid fa-pen mr-1"></i> Update Profile</a></li>
+            </ul>
+          </li>
+        <% } %>         
+      </ul>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,83 @@
+/* .displayCompanyList{
+    text-decoration: none;
+    background-color: yellow !important;
+} */
+
+/* Navbar */
+#navbar{
+    /* background-color: #585757 !important; */
+    /* background-color: #222 !important; */
+    background-color: #353132 !important;
+}
+.navbar a{
+    color: #fff !important;
+}
+.navbar-anchor:hover{
+    opacity: 0.7;
+}
+.dropdown-menu{
+    margin-left: 0.5rem !important;
+    background-color: #585757 !important;
+}
+.dropdown-menu li a:hover{
+    background-color: black !important;
+}
+.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0; /* remove the gap so it doesn't close */
+}
+
+/* Footer */
+.footer {
+    background-color: #222; /* Darker black for footer */
+    color: #fff; /* White text */            
+}
+
+/* Index Page */
+.jumbotron {
+    background-color: #222 !important; /* Dark gray for the jumbotron */
+    color: #fff; /* White text */
+}
+.jumbotron .btn-primary {
+    background-color: #fff; /* White button */
+    color: #000 !important; /* Black text */
+    border: 1px solid #fff;
+}
+.jumbotron .btn-primary:hover {
+    background-color: #ccc; /* Light gray on hover */
+    color: #000;
+}
+.jumbotron .btn-success {
+    background-color: #000; /* Dark gray button */
+    color: white;
+    border: 1px solid #555;
+}
+.jumbotron .btn-success:hover {
+    background-color: #302e2e; /* Lighter gray on hover */
+    color: #fff;
+}
+.index .btn-outline-info {
+    color: #fff; /* White text for placement links */
+    border-color: #fff; /* White border */
+}
+.index .btn-outline-info:hover {
+    background-color: #fff;
+    color: #000;
+}
+
+/* About Page */
+body{
+    background-color: black;
+}
+.about {
+    background-color: #222; /* Dark gray for the jumbotron */
+    color: #fff; /* White text */
+    border-radius: 0.4rem;
+}
+.about-icon{
+    color: white;
+}
+.about-icon:hover{
+    opacity: 0.6;
+}
+

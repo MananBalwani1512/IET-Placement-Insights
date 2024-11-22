@@ -1,0 +1,114 @@
+<% layout("../layouts/boilerplate.ejs") %>          
+<style>
+    body{
+        position: relative;
+        background-color: #000;
+        color: white;
+        /* min-height: 100vh;
+        display: flex;
+        flex-direction: column; */
+    }
+
+    /* #footer{
+        margin-top: 10rem;
+    } */
+
+    #login-btn{
+        background-color: #353132 !important;
+        color: white;
+    }
+    #login{
+        display: flex;
+        justify-content: center;
+    }
+    input,textarea,select{
+        background-color: #353132 !important;
+        color: white !important;
+    }
+    #btn-add{
+        position: absolute;
+        top: 2rem;
+        right: -5rem;
+        background-color: #353132 !important; 
+    }
+    #btn-add a{
+        color: white !important;
+        text-decoration: none !important;
+    }
+    .trix-editor{
+        background-color: #353132; 
+        color: white; 
+        height:20rem; 
+        overflow: scroll;        
+    }
+    /* Customize the tag background color and border */
+    .tagify__tag {
+        background-color: #353132; /* Green background */
+        border: 1px solid black; /* Darker green border */
+        color: white; /* Text color */
+    }
+
+    /* Customize the hover effect */
+    .tagify__tag:hover {
+        background-color: white; /* Lighter green on hover */
+    }
+
+    /* Customize the input area */
+    .tagify__input {
+        background-color: #353132; /* Light grey background */
+        color: white; /* Dark text color */
+    }
+    trix-toolbar .trix-button-group--file-tools
+    {
+        display : none;
+    }
+</style>      
+
+<div class="row">
+    <div class="col-8 offset-2 mt-5">
+        <form id = "form" onsubmit = "validateForm(event)" action = "/blog/request/add" method = "POST">
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Company </label>
+                <select class = "form-control" name = "company_id" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <option selected>Select the Company</option>
+                    <% for(company of companies) { %>
+                        <option value = <%= company.id %>><%= company.name %></option>
+                    <% } %>
+                </select>
+                
+                <button type = "button" id="btn-add" class="btn btn-tertiary btn-submit">
+                    <a href="/company/add">Add</a>
+                </button>
+            </div>        
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Selection Status</label>
+                <select name = "selection_status" class="form-select" aria-label="Default select example">
+                    <option selected value = false>Select your Selection Status</option>
+                    <option value=true>Selected</option>
+                    <option value=false>Rejected</option>
+                  </select>
+            </div>                   
+            <div class="mb-3">
+                <label for="role" class="form-label">Role</label>
+                <input id="role" type="text" name="role" class="form-control" placeholder="Enter your role">
+            </div>
+            <div class = "mb-3">
+                <!-- Mention Tags for which you want to search the blog -->
+                <label for="tags" class="form-label mr-1">Tags</label>
+                <input id="tags" type= "text" name="tags" placeholder="Mention Tags">    
+            </div>
+            <div class = "mb-3" style = "background-color : white;">
+                <label for="editor" class="form-label">Content</label>
+                <input id="editor" type="hidden" name="content">
+                <trix-editor class="trix-editor" input="editor"></trix-editor>
+            </div>
+            <div id="login">
+                <button id="login-btn" type = "submit" class="btn btn-tertiary btn-submit mb-4 mt-3">Submit</button>
+            </div>       
+          </form>        
+    </div>    
+</div>    
+<script>
+    const tags = document.getElementById("tags");
+    new Tagify(tags);
+</script>

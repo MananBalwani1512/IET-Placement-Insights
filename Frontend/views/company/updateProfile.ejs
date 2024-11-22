@@ -1,0 +1,125 @@
+<% layout("../layouts/boilerplate.ejs") %>
+
+<style>
+    body{
+        position: relative;
+        background-color: #000;
+        color: white;
+    }
+
+    #login-btn{
+        background-color: #353132 !important;
+        color: white;
+    }
+    #login{
+        display: flex;
+        justify-content: center;
+    }
+    input,textarea,select{
+        background-color: #353132 !important;
+        color: white !important;
+    }    
+</style>
+    <div class="row">
+        <div class="col-6 offset-3 mt-5">
+            <form method="POST" action="/user/update">
+                <input type = "hidden" name = "id" id = "id" value = <%= userDetails.id %>>
+                <input type = "hidden" name = "name" id = "name" value = "<%= userDetails.name %>">
+                <input type = "hidden" name = "email" id = "email" value = "<%= userDetails.email %>">
+                <div class="mb-4">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" name = "name" id="name" value="<%= userDetails.name %>" disabled>
+                </div>
+                <div class="mb-4">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name = "email" value="<%= userDetails.email %>" disabled>
+                </div>
+                <div class="mb-4">
+                    <label for="alt-email" class="form-label">Alternate Email <i class="fa-solid fa-envelope ml-1"></i></label>
+                    <input type="email" class="form-control" name = "alternateEmail" value = "<%= userDetails.alternateEmail %>" id="alt-email">
+                </div>
+                <div class="mb-4">
+                    <label for="phoneNumber" class="form-label">Phone Number <i class="fa-solid fa-phone ml-1"></i></label>
+                    <input type="number" class="form-control" id="phoneNumber" name = "phoneNumber" value="<%=userDetails.phoneNumber %>" minlength = 10 maxlength = 10>
+                </div>
+                <div class="mb-4">
+                    Branch <i class="fa-solid fa-graduation-cap ml-1 mb-2"></i>
+                    <select class="form-select" name = "branch" value = "<%= userDetails.branch %>">
+                        <% if((!userDetails.branch) || (userDetails.branch == "")) { %>
+                            <option value = "" selected>Select your branch</option>
+                        <% } else { %>
+                            <option value = "">Select your branch</option>
+                        <% } %>
+                        <% if(userDetails.branch == "Computer Engineering") { %>
+                            <option value = "Computer Engineering" selected>Computer Engineering</option>
+                        <% } else { %>
+                            <option value = "Computer Engineering">Computer Engineering</option>
+                        <% } %>
+                        <% if(userDetails.branch == "Computer Science & Business Systems") { %>
+                            <option value = "Computer Science & Business Systems" selected>Computer Science & Business Systems</option>
+                        <% } else { %>
+                            <option value = "Computer Science & Business Systems">Computer Science & Business Systems</option>
+                        <% } %>
+                        <% if(userDetails.branch == "Information Technology") { %>
+                            <option value = "Information Technology" selected>Information Technology</option>
+                        <% } else { %>
+                            <option value = "Information Technology">Information Technology</option>
+                        <% } %>
+                        <% if(userDetails.branch == "Electronics and Telecommunication Engineering") { %>
+                            <option value = "Electronics and Telecommunication Engineering" selected>Electronics and Telecommunication Engineering</option>
+                        <% } else { %>
+                            <option value = "Electronics and Telecommunication Engineering">Electronics and Telecommunication Engineering</option>
+                        <% } %>
+                        <% if(userDetails.branch == "Electronics and Instrumentation Engineering") { %>
+                            <option value = "Electronics and Instrumentation Engineering" selected>Electronics and Instrumentation Engineering</option>
+                        <% } else { %>
+                            <option value = "Electronics and Instrumentation Engineering">Electronics and Instrumentation Engineering</option>
+                        <% } %>
+                        <% if(userDetails.branch == "Mechanical Engineering") { %>
+                            <option value = "Mechanical Engineering" selected>Mechanical Engineering</option>
+                        <% } else { %>
+                            <option value = "Mechanical Engineering">Mechanical Engineering</option>
+                        <% } %>
+                        <% if(userDetails.branch == "Civil Engineering") { %>
+                            <option value = "Civil Engineering" selected>Civil Engineering</option>
+                        <% } else { %>
+                            <option value = "Civil Engineering">Civil Engineering</option>
+                        <% } %>
+                        
+                        <option value="Civil Engineering">Civil Engineering</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="passout_year" class="form-label">Passout Year <i class="fa-solid fa-calendar-days ml-1"></i></label>
+                    <input type="number" class="form-control" name = "passoutYear" value = "<%= userDetails.passoutYear %>" id="passout_year">
+                </div>
+                <div class="mb-4">
+                    <label for="branch" class="form-label">LinkedIn Profile <i class="fa-brands fa-linkedin ml-1"></i> </label>
+                    <input type="text" class="form-control" id="linkedin_profile" name = "linkedinProfile" value = "<%= userDetails.linkedinProfile %>">
+                </div>
+                <div class="mb-4">
+                    <label for="branch" class="form-label">Github Profile <i class="fa-brands fa-github ml-1"></i> </label>
+                    <input type="text" class="form-control" value = "<%= userDetails.githubProfile %>" id="github_profile" name = "githubProfile">
+                </div>                                
+                <div class="mb-4">
+                    <label for="branch" class="form-label">Coding Profile <i class="fa-solid fa-code ml-1"></i> </label>
+                    <input type="text" class="form-control" value = "<%= userDetails.codingProfile %>" id="coding_profile" name = "codingProfile">
+                </div>
+                <% if((userDetails.showContactDetails) && userDetails.showContactDetails == 1) { %>
+                    <div class = "mb-3">
+                        <label for="showContactDetails" class="form-label mr-1">Show Contact Details</label>
+                        <input checked id="showContactDetails" type= "checkbox" name ="showContactDetails" value = true>   
+                    </div>            
+                <% }  else { %>    
+                
+                    <div class = "mb-3">
+                        <label for="showContactDetails" class="form-label mr-1">Show Contact Details</label>
+                        <input id="showContactDetails" type= "checkbox" name ="showContactDetails" value = true>   
+                    </div>       
+                <% } %>     
+                <div id="login">
+                    <button id="login-btn" type="submit" class="btn mb-4 mt-3">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>

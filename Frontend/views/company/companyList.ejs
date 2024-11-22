@@ -1,0 +1,41 @@
+<% layout("../layouts/boilerplate.ejs") %>
+
+<style>
+    body{
+        background-color: #000;
+        color: #fff;
+    }
+    .list-group{
+        border-radius: 0.4rem;
+    }
+    .company-btn{
+        background-color: #353132 !important; 
+        /* border-radius: 0.5rem; */
+        /* transition: 0.4s; */
+    }
+    .company-btn:hover{
+        /* transition: all 0.2s ease-in 0.1s; */
+        /* font-size: 1.2rem; */
+        opacity: 0.75;
+    }
+    .outerCompList-div{
+        height: 30rem;
+    }
+</style>
+
+<div class="col-6 offset-3 mt-3 mb-5">
+    <h2 class="mt-4 mb-5">Companies List</h2>
+    <ul class="list-group list-group-flush row">
+        <% for(company of companies) { %>
+            <button class="btn btn-secondary mb-4 company-btn">
+                <a href="/blog/getAll/<%= company.id %>" class="displayCompanyList" style="text-decoration:none; color:white">
+                    <%= company.name %>
+                    <span class="badge badge-pill badge-dark ml-3" style="font-size: 1rem; opacity: 0.65; color: white"><%= company.count %></span>   
+                    <!-- <span class="badge text-bg-secondary rounded-circle ml-3" style="font-size: 1rem; color: black !important;"> 
+                        <%= company.count %> 
+                    </span> -->
+                </a>
+            </button>
+        <% } %>            
+    </ul>    
+</div>    

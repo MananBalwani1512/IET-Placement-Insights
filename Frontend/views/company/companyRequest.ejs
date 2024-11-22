@@ -1,0 +1,63 @@
+<% layout("../layouts/boilerplate.ejs") %>
+
+<style>
+  body{
+    background-color: #000;
+    color: white;
+  }
+  .card{
+    background-color: #222;
+  }
+  .wrapper-date{
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    font-weight: 250;
+  }
+  .fa-check{
+    color: rgb(6, 196, 6);
+  }
+  .fa-xmark{
+    color: red;
+  }
+  .card-subtitle{
+    font-size: 0.9rem;
+  }
+  .outerCompReq-div{
+    height: 30rem;
+  }
+  .req-btn{
+    display: flex;
+    position: absolute;
+    top: 1rem;
+    right: 2rem;
+  }  
+</style>
+
+<br>
+<h3>Blogs for Company Requests :</h3>
+<br>
+
+<div class="outerCompReq-div">
+  <% for(companyRequest of companyRequests){ %>
+    <div class="card mb-4">    <!-- use w-75 or style="width: 75rem; height: 20rem" for styling -->
+        <div class="card-body">
+          <h5 class="card-title"><%= companyRequest.name %> </h5>
+          <h6 class="card-subtitle mb-2"> <i> Count: <%= companyRequest.count %></i> </h6>
+
+          <div class="req-btn">
+            <form action="/company/request/accept" method="POST">
+              <input type = "hidden"  name = "name" value = '<%= companyRequest.name %>'>
+              <button class="btn btn-success mr-3" type = "submit">Accept</button>  
+            </form>
+            <form action="/company/request/reject" method="POST">
+              <input type = "hidden"  name = "name" value = '<%= companyRequest.name %>'>
+              <button class="btn btn-danger ml-3" type = "submit">Reject</button>  
+            </form>            
+          </div>
+        </div>
+      </div>    
+<% } %>  
+</div>
+
+                                           
